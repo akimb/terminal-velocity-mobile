@@ -1,12 +1,13 @@
-[gd_scene load_steps=27 format=4 uid="uid://cbex0prspcmjo"]
+[gd_scene load_steps=28 format=4 uid="uid://cbex0prspcmjo"]
 
 [ext_resource type="PackedScene" uid="uid://d032cbpjc4bax" path="res://Assets/official_luggage.glb" id="1_fakku"]
 [ext_resource type="Material" uid="uid://chktpch7mxrfq" path="res://Materials/official_luggage_material/metal_material.tres" id="2_l7glm"]
 [ext_resource type="Script" uid="uid://c0dvlbuemp5wx" path="res://Scripts/luggage.gd" id="2_qu1v0"]
 [ext_resource type="Material" uid="uid://e363r7m2s217" path="res://Materials/official_luggage_material/black_material.tres" id="4_l7glm"]
 [ext_resource type="Material" uid="uid://cnqd6y423d617" path="res://Materials/official_luggage_material/official_luggage_body.tres" id="4_qu1v0"]
+[ext_resource type="Material" uid="uid://2m265hxclhhe" path="res://Materials/cel_shader_base_material.tres" id="5_wapq2"]
 [ext_resource type="AudioStream" uid="uid://cu3eddt7uujl8" path="res://Sounds/plastic_collision.ogg" id="6_c0myj"]
-[ext_resource type="Shader" path="res://Shaders/fire_trail.gdshader" id="6_ke1yc"]
+[ext_resource type="Shader" uid="uid://cm3okf6o8rav4" path="res://Shaders/fire_trail.gdshader" id="6_ke1yc"]
 [ext_resource type="Texture2D" uid="uid://cwt6xociwo7ty" path="res://Assets/particles/slash_02.png" id="7_ke1yc"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_npmhn"]
@@ -282,6 +283,7 @@ mesh = SubResource("ArrayMesh_ke1yc")
 
 [node name="Default Luggage Body" parent="." index="1"]
 mesh = SubResource("ArrayMesh_qu1v0")
+surface_material_override/0 = ExtResource("5_wapq2")
 
 [node name="Default Luggage Handles" parent="." index="2"]
 mesh = SubResource("ArrayMesh_486da")
