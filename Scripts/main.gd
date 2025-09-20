@@ -111,11 +111,11 @@ func _process(delta: float) -> void:
 	
 	var player_forward_vec = project_vector(player.velocity, player.forward_direction)
 	$"FPS Counter/FPSLabel".text = "FPS: " + str(Engine.get_frames_per_second())
-	var str = "%.2f"
+	var fps_display = "%.2f"
 	var speed = player_forward_vec.length()
 	#print($Player.velocity)
-	str = (str % speed)
-	$Speed/SpeedLabel.text = "Speed: " + str + "m/s"
+	fps_display = (fps_display % speed)
+	$Speed/SpeedLabel.text = "Speed: " + fps_display + "m/s"
 	$Speed/Diff.text = "Diff: " + str(GameManager.base_difficulty + GameManager.modifier_difficulty + GameManager.base_diff_mod)
 	main_camera_anchor.global_position.z = player.global_position.z
 	main_camera_anchor.global_position.x = player.global_position.x

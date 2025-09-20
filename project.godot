@@ -10,9 +10,9 @@ config_version=5
 
 [application]
 
-config/name="GWJ81-Expedition"
+config/name="terminal-velocity-mobile"
 run/main_scene="uid://bgkd0agf0cnw7"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/image="uid://bql8sri5iqnvw"
 config/icon="res://icon.svg"
 
@@ -28,11 +28,16 @@ PatternManager="*res://Scripts/Globals/ObstaclePatternManager.gd"
 GameManager="*res://Scenes/game_manager.tscn"
 TransitionEffect="*res://canvas_layer.tscn"
 
+[debug]
+
+settings/stdout/verbose_stdout=true
+
 [display]
 
+window/size/viewport_width=648
+window/size/viewport_height=1152
 window/stretch/mode="canvas_items"
-window/layer_2=""
-window/layer_1=""
+window/handheld/orientation=5
 
 [file_customization]
 

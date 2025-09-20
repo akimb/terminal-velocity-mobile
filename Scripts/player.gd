@@ -59,42 +59,6 @@ func _ready() -> void:
 	
 	self.add_child(luggage_object)
 
-	# Apply the shared shader material to all mesh surfaces in the group
-	#for child in luggage_object.get_children():
-		#if child is MeshInstance3D and child.mesh:
-			#var mesh = child.mesh
-			#for surface in mesh.get_surface_count():
-				#var original_material = mesh.surface_get_material(surface)
-				#if original_material:
-					#all_materials[original_material] = original_material.albedo_color
-			#for surface in child.get_surface_override_material_count():
-				#var override_mat = child.get_surface_override_material(surface)
-				#if override_mat:
-					#all_materials[override_mat] = override_mat.albedo_color
-	#print(all_materials.size())
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-	#if blinking:
-		#elapsed_time += delta
-		#if elapsed_time >= blink_duration:
-			#blinking = false
-			#for mat in all_materials.keys():
-				#mat.albedo_color = all_materials[mat]
-			#return
-#
-		#var blink_state = elapsed_time * (PI / blink_interval)
-		#var max_value = 0.8
-		#var min_value = 0.0
-		#var value = min_value + (max_value - min_value) * (1 + sin(blink_state)) / 2
-#
-		#for mat in all_materials:
-			#mat.albedo_color = mix_colors(all_materials[mat], Color.RED, value)
-
-
 func _physics_process(delta: float) -> void:
 	if !started:
 		return
@@ -208,6 +172,7 @@ func on_hit_obstacle(collider):
 		return
 	#print("ON HIT")
 	GameManager.total_money = max(GameManager.total_money - 5 * 100, 0)
+	Input.vibrate_handheld(100)
 	velocity = forward_direction * -20
 	forward_speed = -20
 	
@@ -217,7 +182,7 @@ func on_hit_obstacle(collider):
 	player_hit.emit()
 	start_blinking()
 
-func on_hit_pickup(collider):
+func on_hit_pickup(_collider):
 	print("TEST")
 
 func start_blinking():

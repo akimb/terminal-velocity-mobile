@@ -32,16 +32,8 @@ corner_radius_top_right = 10
 script/source = "extends Panel
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.custom_minimum_size.x = 10 * (382.185 + 50)
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	#self.custom_minimum_size.x = $HBoxContainer.size.x
-	pass
 "
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68n23"]
@@ -92,8 +84,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -82.0
+offset_top = 153.0
 offset_right = 84.0
-offset_bottom = 82.0
+offset_bottom = 235.0
 grow_horizontal = 2
 theme = ExtResource("2_nk6go")
 theme_override_colors/default_color = Color(1, 1, 1, 1)
@@ -105,15 +98,14 @@ fit_content = true
 vertical_alignment = 1
 
 [node name="Trip Start" type="RichTextLabel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 78.5
-offset_top = -26.0
-offset_right = 529.5
-offset_bottom = 21.0
+offset_left = -225.5
+offset_top = 242.0
+offset_right = 225.5
+offset_bottom = 289.0
 grow_horizontal = 2
 theme = ExtResource("2_nk6go")
 theme_override_colors/default_color = Color(1, 1, 1, 1)
@@ -122,6 +114,7 @@ theme_override_fonts/normal_font = ExtResource("2_vh24d")
 theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 text = "Trip Start: "
+horizontal_alignment = 1
 
 [node name="Trip Start2" type="RichTextLabel" parent="."]
 visible = false
@@ -144,17 +137,17 @@ fit_content = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -404.0
-offset_top = -557.0
-offset_right = 406.0
-offset_bottom = -11.0
+anchor_bottom = 0.5
+offset_left = -311.0
+offset_top = -273.0
+offset_right = 311.0
+offset_bottom = 273.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme = ExtResource("2_nk6go")
 
 [node name="Panel" type="Panel" parent="ScrollContainer"]
@@ -165,7 +158,7 @@ script = SubResource("GDScript_gysin")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/Panel"]
 custom_minimum_size = Vector2(3821.85, 455.03)
-layout_mode = 2
+layout_mode = 0
 offset_top = 5.0
 offset_right = 500.0
 offset_bottom = 520.0
@@ -177,36 +170,32 @@ layout_mode = 2
 theme_override_constants/separation = 30
 theme_override_styles/separator = SubResource("StyleBoxEmpty_68n23")
 
-[node name="Back" type="Button" parent="."]
+[node name="Buttons" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.9
-anchor_right = 0.02
-anchor_bottom = 0.9
-offset_top = -43.0
-offset_right = 99.0
-offset_bottom = 43.0
-grow_vertical = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -106.0
+offset_top = -221.0
+offset_right = 106.0
+offset_bottom = -135.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 319
+
+[node name="Back" type="Button" parent="Buttons"]
+layout_mode = 2
 theme = ExtResource("2_nk6go")
 text = "Back"
 
-[node name="Fly" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.98
-anchor_top = 0.9
-anchor_right = 0.98
-anchor_bottom = 0.9
-offset_left = -109.0
-offset_top = -43.0
-offset_bottom = 43.0
-grow_horizontal = 0
-grow_vertical = 2
+[node name="Fly" type="Button" parent="Buttons"]
+layout_mode = 2
 theme = ExtResource("2_nk6go")
 text = "Fly!"
 
-[connection signal="mouse_entered" from="Back" to="." method="_on_back_mouse_entered"]
-[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
-[connection signal="mouse_entered" from="Fly" to="." method="_on_fly_mouse_entered"]
-[connection signal="pressed" from="Fly" to="." method="_on_fly_pressed"]
+[connection signal="mouse_entered" from="Buttons/Back" to="." method="_on_back_mouse_entered"]
+[connection signal="pressed" from="Buttons/Back" to="." method="_on_back_pressed"]
+[connection signal="mouse_entered" from="Buttons/Fly" to="." method="_on_fly_mouse_entered"]
+[connection signal="pressed" from="Buttons/Fly" to="." method="_on_fly_pressed"]

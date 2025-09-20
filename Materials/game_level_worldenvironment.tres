@@ -10,9 +10,9 @@ noise_type = 3
 offset = Vector3(-100, -44.4, 0)
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yrogv"]
-seamless = true
-color_ramp = SubResource("Gradient_ss0w5")
 noise = SubResource("FastNoiseLite_ss0w5")
+color_ramp = SubResource("Gradient_ss0w5")
+seamless = true
 
 [sub_resource type="Gradient" id="Gradient_fnbnn"]
 
