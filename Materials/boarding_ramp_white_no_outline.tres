@@ -5,11 +5,11 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_ia0l3")
-shader_parameter/color = Color(0.215902, 0.215902, 0.215902, 1)
+shader_parameter/color = Color(0.124200605, 0.22766897, 0.43578145, 1)
 shader_parameter/specular = Color(0.3, 0.3, 0.3, 0.5)
 shader_parameter/fresnel = Color(0.2, 0.2, 0.2, 0.3)
 shader_parameter/metallic = 0.0
-shader_parameter/roughness = 0.5
+shader_parameter/roughness = 1.0
 shader_parameter/is_person = false
 shader_parameter/target_color = Color(0, 0, 0, 1)
 shader_parameter/new_color = Color(0, 0, 0, 1)

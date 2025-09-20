@@ -37,7 +37,6 @@ var double_check = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	check_thread = Thread.new()
-	
 	#GameManager.total_money += start_money
 
 	await get_tree().create_timer(0.01).timeout
@@ -229,7 +228,6 @@ func _on_update_vis_timer_timeout() -> void:
 		if counter > 50:
 			counter = 0 
 			await get_tree().process_frame
-	pass # Replace with function body.
 
 func player_on_hit():
 	GameManager.health -= 1

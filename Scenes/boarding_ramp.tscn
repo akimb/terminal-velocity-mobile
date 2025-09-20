@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://xicolt62u2x5"]
+[gd_scene load_steps=24 format=3 uid="uid://xicolt62u2x5"]
 
 [ext_resource type="Script" uid="uid://bem4xdckxwof0" path="res://Scripts/boarding_ramp.gd" id="1_vf4kb"]
 [ext_resource type="BoxMesh" uid="uid://gleggscnvo6t" path="res://Scenes/multimesh_mesh.tres" id="2_1j28i"]
@@ -8,6 +8,7 @@
 [ext_resource type="Material" uid="uid://ioqjey8l3e5m" path="res://Materials/boarding_ramp_white.tres" id="3_tjkg0"]
 [ext_resource type="Material" uid="uid://b1rk01s3g06te" path="res://Materials/window_mat.tres" id="4_tjkg0"]
 [ext_resource type="Material" uid="uid://by304ddkfo7w8" path="res://Materials/boarding_ramp_white_no_outline.tres" id="4_vf4kb"]
+[ext_resource type="PackedScene" uid="uid://vuvcd13fwvxx" path="res://Assets/ceiling_light.glb" id="9_fgggt"]
 
 [sub_resource type="MultiMesh" id="MultiMesh_slby5"]
 resource_local_to_scene = true
@@ -95,6 +96,10 @@ material = ExtResource("4_tjkg0")
 add_uv2 = true
 size = Vector3(0.1, 7.1, 16)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fgggt"]
+emission_enabled = true
+emission = Color(1, 0.9764706, 0.5686275, 1)
+
 [node name="BoardingRamp" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 script = ExtResource("1_vf4kb")
@@ -148,3 +153,36 @@ mesh = SubResource("BoxMesh_offkc")
 [node name="WindowRight" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5.506, 8)
 mesh = SubResource("BoxMesh_65hqn")
+
+[node name="ceiling_light" parent="." instance=ExtResource("9_fgggt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.9697294, 3.1325073)
+
+[node name="Cube" parent="ceiling_light" index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_fgggt")
+
+[node name="OmniLight3D" type="SpotLight3D" parent="ceiling_light"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.39041138, 0)
+light_color = Color(1, 1, 0.5882353, 1)
+light_energy = 5.0
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+spot_range = 11.5
+spot_attenuation = -0.35
+
+[node name="ceiling_light2" parent="." instance=ExtResource("9_fgggt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.9697294, 13.132507)
+
+[node name="Cube" parent="ceiling_light2" index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_fgggt")
+
+[node name="OmniLight3D" type="SpotLight3D" parent="ceiling_light2"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.39041138, 0)
+light_color = Color(1, 1, 0.5882353, 1)
+light_energy = 5.0
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+spot_range = 11.5
+spot_attenuation = -0.35
+
+[editable path="ceiling_light"]
+[editable path="ceiling_light2"]
