@@ -123,7 +123,7 @@ func set_luggage(luggage, luggage_scene):
 	total_health = luggage.health
 	health = total_health
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("pause") \
 	and not get_tree().root.has_node("Main Menu") \
 	and not get_tree().root.has_node("Game Over Screen") \

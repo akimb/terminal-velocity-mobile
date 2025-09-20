@@ -7,7 +7,7 @@ func _ready():
 	sfx_volume.value = GameManager.sfx_db
 	music_volume.value = GameManager.music_db
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
 		unpause()
 

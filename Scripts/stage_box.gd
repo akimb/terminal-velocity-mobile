@@ -12,16 +12,16 @@ func _ready() -> void:
 	if stylebox is StyleBoxFlat:
 		stylebox.shadow_size = 0
 
-func set_info(city:CityInfo):
-	$DiffMod.frame = city.modifier_difficulty
-	$"HBoxContainer/Airport Code".text = city.airport_code
+func set_info(curr_city:CityInfo):
+	$DiffMod.frame = curr_city.modifier_difficulty
+	$"HBoxContainer/Airport Code".text = curr_city.airport_code
 	
 	var label = $HBoxContainer/CityName
 	var label_settings = label.label_settings
 	var font_size = label_settings.font_size
-	var font = label_settings.font
+	#var font = label_settings.font
 	
-	$HBoxContainer/CityName.text = city.name
+	$HBoxContainer/CityName.text = curr_city.name
 	await $HBoxContainer/CityName.resized
 	
 	while $HBoxContainer/CityName.size.x > 130:
@@ -29,7 +29,7 @@ func set_info(city:CityInfo):
 		label_settings.font_size = font_size
 		await $HBoxContainer/CityName.resized
 		
-	self.city = city
+	self.city = curr_city
 
 func select():
 	var stylebox := get_theme_stylebox("panel")
@@ -70,8 +70,7 @@ func unlock():
 	self.modulate = Color(1.0,1.0,1.0,1.0)
 
 func _on_button_pressed() -> void:
+	SoundBus.click.play()
 	select()
 	GameManager.selected_city = self.city
-	#print("button")
 	stage_select.emit(self)
-	pass # Replace with function body.

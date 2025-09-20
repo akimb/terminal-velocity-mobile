@@ -11,7 +11,7 @@ extends Node3D
 
 
 @onready var floor_mesh: MeshInstance3D = $Floor/FloorMesh
-@onready var floor: StaticBody3D = $Floor
+@onready var airline_floor: StaticBody3D = $Floor
 
 @onready var side_left: StaticBody3D = $SideLeft
 @onready var side_left_mesh: MeshInstance3D = $SideLeft/SideLeftMesh
@@ -59,7 +59,7 @@ func set_size():
 	self.position.y = 3.0
 	floor_mesh.mesh.size.z = length
 	floor_mesh.mesh.size.x = width
-	floor.position.z = (length / 2.0)
+	airline_floor.position.z = (length / 2.0)
 	
 	roof_mesh.mesh.size.z = length
 	roof_mesh.mesh.size.x = width
@@ -86,11 +86,11 @@ func set_size():
 	pillars_left.position.x = width/2.0
 	pillars_right.position.x = -width/2.0
 	
-	await get_tree().create_timer(0.1)
+	await get_tree().create_timer(0.1).timeout
 	pillars_left.remesh(int(ceil(length/4)) + 1)
-	await get_tree().create_timer(0.1)
+	await get_tree().create_timer(0.1).timeout
 	pillars_right.remesh(int(ceil(length/4)) + 1)
-	await get_tree().create_timer(0.1)
+	await get_tree().create_timer(0.1).timeout
 	
 func ready_stage(difficulty):
 	var starting_pos = 5.0
@@ -105,7 +105,7 @@ func ready_stage(difficulty):
 	var sum_w:float = weight_easy + weight_med + weight_hard
 	var p_easy:float = weight_easy / sum_w
 	var p_med:float  = weight_med  / sum_w
-	var p_hard:float = weight_hard / sum_w
+	#var p_hard:float = weight_hard / sum_w
 
 	var gap_bias:float = 1.0 - (difficulty - 1) * 0.075   # goes from 1.0 → 0.55
 	var min_gap:float = max(12.5, BASE_MIN_GAP * gap_bias)

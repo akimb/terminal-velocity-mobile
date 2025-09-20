@@ -10,7 +10,7 @@ signal player_finished
 signal finished_generation
 
 @export_category("Generation")
-@export var seed:int = 0
+@export var seed_to_use:int = 0
 @export var total_path:int = 300
 @export var editor_difficulty = 5
 @export_tool_button("Randomize Seed", "AudioStreamRandomizer") var rand_seed = randomize_seed
@@ -29,7 +29,7 @@ var left_turns = []
 var ramps = []
 
 func randomize_seed():
-	seed = (Time.get_ticks_msec() * 98765) % 12345678
+	seed_to_use = (Time.get_ticks_msec() * 98765) % 12345678
 	property_list_changed.emit()
 
 func generate():
@@ -37,8 +37,8 @@ func generate():
 		return
 	randomize_seed()
 	var rng = RandomNumberGenerator.new()
-	rng.seed = seed
-	seed(seed)
+	rng.seed = seed_to_use
+	seed(seed_to_use)
 	
 
 	total_path =  350 + 14.2 * randi_range(10,11) * (GameManager.base_difficulty + (GameManager.base_diff_mod/1.4))
@@ -99,7 +99,7 @@ func generate():
 	add_child(start)
 	await get_tree().process_frame
 	start.position = current_pos - (4 * forward_dir)
-	start.length
+	#start.length
 	await get_tree().process_frame
 	start.set_size()
 	await get_tree().process_frame

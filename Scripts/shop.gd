@@ -4,35 +4,37 @@ signal highlight_item
 signal interact_item
 
 @onready var selection_menu_ui = $"Selection Menu UI"
-@onready var pointer = $Pointer
 @onready var camera = $Camera3D
 @onready var item_descriptor = $"Selection Menu UI/Panel/Item Descriptor"
 @onready var item_title = $"Selection Menu UI/Item Title"
 @onready var positive_modifier = $"Selection Menu UI/Panel2/Positive Modifier"
 @onready var negative_modifier = $"Selection Menu UI/Panel3/Negative Modifier"
+@onready var buy: Button = $"Selection Menu UI/Buttons/Buy"
+@onready var next: Button = $"Selection Menu UI/Buttons/Next"
+@onready var money_amount: Label = $"Selection Menu UI/Money/Money Amount"
+@onready var heart_container: HBoxContainer = $"Selection Menu UI/Heart Container"
 
+var hearts : PackedScene = preload("res://Scenes/heart.tscn")
 var select_map = null
 var collider = null
 var current_interacted_item: StaticBody3D = null
+var heart_arr = []
 
+#region items
 const NITRO = preload("res://Scenes/items/nitro.tscn")
 const BOARDING_PASS = preload("res://Scenes/items/boarding_pass_new.tscn")
-
 const LIGHTWEIGHT = preload("res://Scenes/items/lightweight.tscn")
 const WHEEL_LUBRICANT = preload("res://Scenes/items/wheel_lube_new.tscn")
 const STICKY_WHEEL = preload("res://Scenes/items/sticky_wheel_new.tscn")
 const BIKEPUMP = preload("res://Scenes/items/bikepump.tscn")
 const TEDDY = preload("res://Scenes/items/teddy.tscn")
 const REINFORCED = preload("res://Scenes/items/reinforced.tscn")
-
 const GRIPPY = preload("res://Scenes/items/grippy.tscn")
-
 const PRICE_TAG = preload("res://Scenes/price_tag.tscn")
-
 const REPAIR = preload("res://Scenes/items/repair.tscn")
+#endregion
 
 var top_shelf_scenes = [BOARDING_PASS, NITRO, TEDDY, GRIPPY]
-
 var bottom_shelf_scenes = [REINFORCED, WHEEL_LUBRICANT, STICKY_WHEEL, BIKEPUMP, LIGHTWEIGHT]
 var bottom_shelf_scenes_omit_feather = [REINFORCED, WHEEL_LUBRICANT, STICKY_WHEEL, BIKEPUMP]
 var top_shelf_cur = []
@@ -43,10 +45,10 @@ var repair_inst = null
 
 func _ready():
 	randomize()
-	$"Selection Menu UI/Label".text = GameManager.cents_to_str(GameManager.total_money)
+	money_amount.text = GameManager.cents_to_str(GameManager.total_money)
 	SoundBus.rolling_suitcase.stop()
 	SoundBus.song_3.play()
-	$"Selection Menu UI/Buy".disabled = true
+	buy.disabled = true
 	
 	item_descriptor.text = ""
 	item_title.text = ""
@@ -64,9 +66,6 @@ func _ready():
 		dup_bottom_scenes = bottom_shelf_scenes_omit_feather.duplicate()
 	dup_bottom_scenes.shuffle()
 
-	
-		
-
 	for i in range (0,3):
 		var new_btm_shelf_item = dup_bottom_scenes.pop_front()
 		if new_btm_shelf_item:
@@ -75,7 +74,6 @@ func _ready():
 			inst.position += Vector3(6, 20, (i-1) * 40)
 			$"Shop Items".add_child(inst)
 
-			
 	var dup_top_scenes = top_shelf_scenes.duplicate()
 	dup_top_scenes.shuffle()
 	for i in range (0,2):
@@ -94,8 +92,13 @@ func _ready():
 	
 	for item in $"Shop Items".get_children():
 		item.recheck_prices()
-		
-func _physics_process(delta: float) -> void:
+	
+	for lives in GameManager.total_health:
+		var one_life = hearts.instantiate()
+		heart_container.add_child(one_life)
+		heart_arr.append(one_life)
+	
+func _physics_process(_delta: float) -> void:
 	
 	if GameManager.map_select_loaded.visible == true:
 		return
@@ -110,21 +113,21 @@ func _physics_process(delta: float) -> void:
 	var result = space_state.intersect_ray(query)
 
 	if result:
-		var collider = result.collider
-		if collider is ShopItem:
-			highlight_item.emit(collider)
+		var item_collider = result.collider
+		if item_collider is ShopItem:
+			highlight_item.emit(item_collider)
 
 			if Input.is_action_just_pressed("interact"):
-				if collider.can_buy():
-					current_interacted_item = collider
-					selected_item = collider
-					interact_item.emit(collider)
-					$"Selection Menu UI/Buy".disabled = false
+				if item_collider.can_buy():
+					current_interacted_item = item_collider
+					selected_item = item_collider
+					interact_item.emit(item_collider)
+					buy.disabled = false
 				else:
 					SoundBus.wrong.play()
-			set_pos_neg_mod(collider)
-			item_descriptor.text = collider.description
-			item_title.text = collider.item_title
+			set_pos_neg_mod(item_collider)
+			item_descriptor.text = item_collider.description
+			item_title.text = item_collider.item_title
 		else:
 			hover_none()
 	else:
@@ -167,22 +170,22 @@ func _on_next_pressed():
 
 func _on_buy_pressed() -> void:
 	SoundBus.buy.play()
-	$"Selection Menu UI/Label".text = GameManager.cents_to_str(GameManager.total_money)
+	money_amount.text = GameManager.cents_to_str(GameManager.total_money)
 	if selected_item:
 		selected_item.buy()
 		if selected_item.name != "Repair":
 			selected_item.disable()
-			$"Selection Menu UI/Buy".disabled = true
+			buy.disabled = true
 		repair_check()
 		selected_item = null
 		item_descriptor.text = ""
 		item_title.text = ""
-		$"Selection Menu UI/Buy".disabled = true
-	$"Selection Menu UI/Buy".disabled = true
+		buy.disabled = true
+	buy.disabled = true
 	
 	for item in $"Shop Items".get_children():
 		item.recheck_prices()
-	$"Selection Menu UI/Label".text = GameManager.cents_to_str(GameManager.total_money)
+	money_amount.text = GameManager.cents_to_str(GameManager.total_money)
 	pass # Replace with function body.
 
 func repair_check():
