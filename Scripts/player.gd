@@ -29,7 +29,7 @@ var elapsed_time = 0.0
 var all_materials = {}
 var forward_speed: float = 0.0
 var luggage_object = null
-
+var input_direction : float = 0.0
 var reached_end = false
 
 
@@ -39,7 +39,6 @@ var started = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
 	luggage = GameManager.chosen_luggage
 	if luggage == null:
 		luggage = load("res://Scenes/official_luggage_mainmenu.tscn")
@@ -89,6 +88,25 @@ func _physics_process(delta: float) -> void:
 			elif collider.is_in_group("pickup"):
 				on_hit_pickup(collider)
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch and event.is_pressed():
+		print(get_viewport().size.x)
+		var center = get_viewport().size.x * 0.5
+		print(center)
+		print(event.position.x)
+		if event.position.x < center:
+			input_direction = 1.0
+		elif event.position.x >= center:
+			input_direction = -1.0
+	elif event is InputEventScreenTouch and event.is_released():
+		input_direction = 0.0
+	#if event is InputEventScreenDrag:
+		#print(event.relative.x)
+		#var center = get_viewport().size.x * 0.5
+		#input_direction = clamp((event.position.x - center) / center, -1.0, 1.0)
+	#elif event is InputEventScreenTouch and event.is_released():
+		#input_direction = 0.0
+
 func handle_player_movement(delta:float):
 	var acceleration = 5.0
 	var recovery_acceleration = 3.0  # Slower when recovering from negative speed
@@ -116,7 +134,7 @@ func handle_player_movement(delta:float):
 		#velocity.y += -9.81 * delta
 
 	# Get input for turning
-	var input_direction: float = Input.get_axis("right", "left")
+	#var input_direction: float = Input.get_axis("right", "left")
 	var forward_angle: float = atan2(forward_direction.x, forward_direction.z)
 	var target_rotation: float = forward_angle + deg_to_rad(max_turn_angle * input_direction)
 	var current_rotation: float = lerp_angle(rotation.y, target_rotation, smooth_factor)

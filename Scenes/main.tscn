@@ -276,7 +276,6 @@ script = ExtResource("1_jjgbg")
 
 [node name="BoardingGenerator" parent="." instance=ExtResource("2_kry3j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.5126, 0)
-seed_to_use = null
 total_path = 460
 editor_difficulty = 10
 
